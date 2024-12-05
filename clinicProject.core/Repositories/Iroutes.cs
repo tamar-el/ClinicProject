@@ -9,7 +9,7 @@ namespace clinicProject.core.Repositories
 {
     public interface Iroutes
     {
-        public List<ClassRoute> Get();
+        public IEnumerable<ClassRoute> Get();
         public ClassRoute Add(ClassRoute doctor);
     }
 }

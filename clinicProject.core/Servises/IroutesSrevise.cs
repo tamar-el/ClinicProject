@@ -9,7 +9,7 @@ namespace clinicProject.core.Servises
 {
     public interface IroutesSrevise
     {
-        public List<ClassRoute> GetClassRoutes();
+        public IEnumerable<ClassRoute> GetClassRoutes();
         public ClassRoute AddRoutes(ClassRoute doctor);
     }
 }

@@ -10,6 +10,8 @@ namespace clinicProject.core.Repositories
     public interface Ipatient
     {
         public IEnumerable<ClassPatient> Get();
-        public ClassPatient Add(ClassPatient doctor);
+        public ClassPatient Add(ClassPatient patient);
+        public void Delete(ClassPatient patient);
+        public void DeleteId(int id);
     }
 }

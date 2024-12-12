@@ -41,16 +41,16 @@ namespace clinicProject.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] ClassRoute value)
         {
-            var index = _RoutesServise.GetClassRoutes().FindIndex(x => x.id == id);
-            _RoutesServise.GetClassRoutes()[index] = value;
+            var index = _RoutesServise.GetClassRoutes().ToList().FindIndex(x => x.id == id);
+            _RoutesServise.GetClassRoutes().ToList()[index] = value;
         }
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var index= _RoutesServise.GetClassRoutes().FindIndex(x => x.id == id);
-            _RoutesServise.GetClassRoutes().RemoveAt(index);
+            var index= _RoutesServise.GetClassRoutes().ToList().FindIndex(x => x.id == id);
+            _RoutesServise.GetClassRoutes().ToList().RemoveAt(index);
         }
     }
 }

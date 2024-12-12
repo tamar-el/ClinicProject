@@ -9,7 +9,7 @@ namespace clinicProject.core.Servises
 {
     public interface IdoctorServise
     {
-        public List<ClassDoctor> GetClassDoctors();
+        public IEnumerable<ClassDoctor> GetClassDoctors();
         public ClassDoctor AddDoctor(ClassDoctor doctor);
     }
 }

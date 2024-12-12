@@ -13,5 +13,7 @@ namespace clinicProject.core.Entities
         public long phone { get; set; }
         public string email { get; set; }
         public int businesshours { get; set; }
+        public List<ClassPatient> patients { get; set; }
+        public List <ClassRoute> Routes { get; set; }
     }
 }

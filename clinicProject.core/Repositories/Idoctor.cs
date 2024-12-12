@@ -12,5 +12,7 @@ namespace clinicProject.core.Repositories
     {
         public IEnumerable<ClassDoctor> Get();
         public ClassDoctor Add(ClassDoctor doctor);
+        public void Delete(ClassDoctor doctor);
+        public void DeleteId(int id);
     }
 }

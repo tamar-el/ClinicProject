@@ -1,6 +1,6 @@
 ﻿using clinicProject.core.Entities;
 using clinicProject.core.Repositories;
-
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace clinicProject.data.Repositories
         }
         public IEnumerable<ClassDoctor> Get()
         {
-            return _context.doctors;
+            return _context.doctors.Include(o=>o.Routes);
         }
         public ClassDoctor Add(ClassDoctor doctor)
         {
@@ -26,9 +26,21 @@ namespace clinicProject.data.Repositories
             _context.SaveChanges();
             return doctor;
         }
-        //public void Delete()
-        //{
-        //    _context.doctors.Clear();
-        //}
+        public void Delete(ClassDoctor doctor)
+        {
+            _context?.doctors.Remove(doctor);
+
+        }
+        public void DeleteId(int id)
+        {
+            var doctors = _context.doctors.FirstOrDefault(x => x.id == id);
+            if (doctors != null)
+            {
+                _context.doctors.Remove(doctors);
+                _context.SaveChanges();
+
+            }
+        }
+        
     }
 }

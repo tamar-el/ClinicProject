@@ -16,7 +16,7 @@ namespace clinicProject.service
         {
             _routesRepository = routesRepository;
         }
-        public List<ClassRoute> GetClassRoutes()
+        public IEnumerable<ClassRoute> GetClassRoutes()
         {
             return _routesRepository.Get();
 

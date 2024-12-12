@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using clinicProject;
 
@@ -11,9 +12,11 @@ using clinicProject;
 namespace clinicProject.data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20241212110932_many-to-many")]
+    partial class manytomany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,25 +113,15 @@ namespace clinicProject.data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("doctorid")
-                        .HasColumnType("int");
-
                     b.Property<string>("endTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("patientid")
-                        .HasColumnType("int");
 
                     b.Property<string>("startTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
-
-                    b.HasIndex("doctorid");
-
-                    b.HasIndex("patientid");
 
                     b.ToTable("routes");
                 });
@@ -146,35 +139,6 @@ namespace clinicProject.data.Migrations
                         .HasForeignKey("patientsid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("clinicProject.core.Entities.ClassRoute", b =>
-                {
-                    b.HasOne("clinicProject.core.Entities.ClassDoctor", "doctor")
-                        .WithMany("Routes")
-                        .HasForeignKey("doctorid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("clinicProject.core.Entities.ClassPatient", "patient")
-                        .WithMany("Routes")
-                        .HasForeignKey("patientid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("doctor");
-
-                    b.Navigation("patient");
-                });
-
-            modelBuilder.Entity("clinicProject.core.Entities.ClassDoctor", b =>
-                {
-                    b.Navigation("Routes");
-                });
-
-            modelBuilder.Entity("clinicProject.core.Entities.ClassPatient", b =>
-                {
-                    b.Navigation("Routes");
                 });
 #pragma warning restore 612, 618
         }

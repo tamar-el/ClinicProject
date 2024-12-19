@@ -9,20 +9,25 @@ using System.Threading.Tasks;
 
 namespace clinicProject.service
 {
-    public class DoctorServise: IdoctorServise
+    public class DoctorServise : IdoctorServise
     {
         private Idoctor _doctorRepository;
         public DoctorServise(Idoctor doctorRepository)
         {
             _doctorRepository = doctorRepository;
         }
-        public IEnumerable<ClassDoctor> GetClassDoctors() {
+        public IEnumerable<ClassDoctor> GetClassDoctors()
+        {
             return _doctorRepository.Get();
-             
+
         }
         public ClassDoctor AddDoctor(ClassDoctor doctor)
         {
             return _doctorRepository.Add(doctor);
         }
-        }
+        //public ClassDoctor Get(int id)
+        //{
+        //    return _doctorRepository.Get(id);
+        //}
+    }
 }

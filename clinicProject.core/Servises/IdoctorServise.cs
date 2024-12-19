@@ -11,5 +11,6 @@ namespace clinicProject.core.Servises
     {
         public IEnumerable<ClassDoctor> GetClassDoctors();
         public ClassDoctor AddDoctor(ClassDoctor doctor);
+        public ClassDoctor Get(int id);
     }
 }

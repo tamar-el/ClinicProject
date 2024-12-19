@@ -2,6 +2,7 @@
 using clinicProject.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using clinicProject.service;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,10 +12,12 @@ namespace clinicProject.Controllers
     [ApiController]
     public class patientController : ControllerBase
     {
-       private IpatientSrevise _PatientServise;
-        public patientController(IpatientSrevise PatientServise)
+       private readonly IpatientSrevise _PatientServise;
+        private readonly IMapper _Mapper;
+        public patientController(IpatientSrevise PatientServise,IMapper mapper)
         {
             _PatientServise = PatientServise;
+            _Mapper = mapper;
         }
 
         // GET: api/<patientController>

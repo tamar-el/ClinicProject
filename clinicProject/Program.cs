@@ -1,4 +1,5 @@
 using clinicProject;
+using clinicProject.core;
 using clinicProject.core.Repositories;
 using clinicProject.core.Servises;
 using clinicProject.data.Repositories;
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IpatientSrevise,PatientServise>();
 builder.Services.AddScoped<Ipatient, PatientRepository>();
 builder.Services.AddScoped<IroutesSrevise,RoutesServise>();
 builder.Services.AddScoped<Iroutes, RouteRepository>();
+//הזרקת דף מיפוי נתונים
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

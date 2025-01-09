@@ -3,6 +3,9 @@ using clinicProject.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using clinicProject.service;
 using AutoMapper;
+using clinicProject.core.DTOs;
+using clinicProject.core.DBOs;
+using clinicProject.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +25,17 @@ namespace clinicProject.Controllers
 
         // GET: api/<patientController>
         [HttpGet]
-        public IEnumerable<ClassPatient> Get()
+        //public IEnumerable<ClassPatient> Get()
+        //{
+        //    return _PatientServise.GetClassdPatient();
+        //}
+        public ActionResult Get()
         {
-            return _PatientServise.GetClassdPatient();
+            var list = _PatientServise.GetClassdPatient();
+            var Ptolist = new List<PatientDto>();
+            Ptolist = _Mapper.Map<List<PatientDto>>(list);
+
+            return Ok(Ptolist);
         }
 
         // GET api/<patientController>/5
@@ -36,10 +47,11 @@ namespace clinicProject.Controllers
 
         // POST api/<patientController>
         [HttpPost]
-        public ClassPatient Post([FromBody] ClassPatient value)
+        public ActionResult Post([FromBody] PatientModel value)
         {
-            _PatientServise.AddPatient(value);
-            return value;
+            var newPatient = new ClassPatient { id = value.id, name = value.name,age=value.age,address=value.address, phone = value.phone, email = value.email };
+
+            return Ok(_PatientServise.AddPatient(newPatient));
         }
 
         // PUT api/<patientController>/5

@@ -2,6 +2,10 @@
 using clinicProject.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using clinicProject.core.DBOs;
+using clinicProject.service;
+using clinicProject.core.DTOs;
+using clinicProject.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,9 +24,17 @@ namespace clinicProject.Controllers
         }
         // GET: api/<RoutesController>
         [HttpGet]
-        public  IEnumerable<ClassRoute> Get()
+        //public  IEnumerable<ClassRoute> Get()
+        //{
+        //    return _RoutesServise.GetClassRoutes();
+        //}
+        public ActionResult Get()
         {
-            return _RoutesServise.GetClassRoutes();
+            var list = _RoutesServise.GetClassRoutes();
+            var Rtolist = new List<RouteDto>();
+            Rtolist = _Mapper.Map<List<RouteDto>>(list);
+
+            return Ok(Rtolist);
         }
 
         // GET api/<RoutesController>/5
@@ -34,10 +46,11 @@ namespace clinicProject.Controllers
 
         // POST api/<RoutesController>
         [HttpPost]
-        public ClassRoute Post([FromBody] ClassRoute value)
+        public ActionResult Post([FromBody] RouteModel value)
         {
-            _RoutesServise.AddRoutes(value);
-            return value;
+            var newRoute = new ClassRoute { Date=value.Date,startTime=value.startTime,endTime=value.endTime,id=value.id,Dname=value.Dname };
+
+            return Ok(_RoutesServise.AddRoutes(newRoute));
         }
 
         // PUT api/<RoutesController>/5

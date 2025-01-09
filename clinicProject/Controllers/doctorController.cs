@@ -1,6 +1,9 @@
-﻿using clinicProject.core.Servises;
+﻿                                                                                  using clinicProject.core.Servises;
 using clinicProject.core.Entities;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using clinicProject.core.DTOs;
+using clinicProject.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,17 +14,27 @@ namespace clinicProject.Controllers
     public class doctorController : ControllerBase
     {
         private IdoctorServise _DoctorServise;
-        public doctorController(IdoctorServise doctorServise)
+        private readonly IMapper _Mapper;
+        public doctorController(IdoctorServise doctorServise, IMapper mapper)
         {
             _DoctorServise = doctorServise;
+            _Mapper=mapper;
         }
 
        
         // GET: api/<doctorController>
         [HttpGet]
-        public IEnumerable<ClassDoctor> Get()
+        //public IEnumerable<ClassDoctor> Get()
+        //{
+        //    return _DoctorServise.GetClassDoctors();
+        //}
+        public ActionResult Get()
         {
-            return _DoctorServise.GetClassDoctors();
+            var list = _DoctorServise.GetClassDoctors();
+            var Dtolist = new List<DoctorDto>();
+            Dtolist = _Mapper.Map<List<DoctorDto>>(list);
+
+            return Ok(Dtolist);
         }
 
         // GET api/<doctorController>/5
@@ -33,10 +46,11 @@ namespace clinicProject.Controllers
 
         // POST api/<doctorController>
         [HttpPost]
-        public ClassDoctor Post([FromBody] ClassDoctor value)
+        public ActionResult Post([FromBody] DoctorModel value)
         {
-            _DoctorServise.AddDoctor(value);
-            return value;
+            var newDoctor=new ClassDoctor {id= value.id,name=value.name,phone=value.phone,email=value.email};
+            
+            return Ok(_DoctorServise.AddDoctor(newDoctor) );
         }
 
         // PUT api/<doctorController>/5

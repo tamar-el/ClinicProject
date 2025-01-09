@@ -25,6 +25,11 @@ namespace clinicProject.service
         {
             return _doctorRepository.Add(doctor);
         }
+
+        public ClassDoctor Get(int id)
+        {
+            throw new NotImplementedException();
+        }
         //public ClassDoctor Get(int id)
         //{
         //    return _doctorRepository.Get(id);

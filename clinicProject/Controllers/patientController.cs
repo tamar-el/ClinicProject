@@ -29,9 +29,9 @@ namespace clinicProject.Controllers
         //{
         //    return _PatientServise.GetClassdPatient();
         //}
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var list = _PatientServise.GetClassdPatient();
+            var list =await  _PatientServise.GetClassdPatientAsync();
             var Ptolist = new List<PatientDto>();
             Ptolist = _Mapper.Map<List<PatientDto>>(list);
 
@@ -47,27 +47,31 @@ namespace clinicProject.Controllers
 
         // POST api/<patientController>
         [HttpPost]
-        public ActionResult Post([FromBody] PatientModel value)
+        public async Task<ActionResult> Post([FromBody] PatientModel value)
         {
             var newPatient = new ClassPatient { id = value.id, name = value.name,age=value.age,address=value.address, phone = value.phone, email = value.email };
 
-            return Ok(_PatientServise.AddPatient(newPatient));
+            return Ok(await _PatientServise.AddPatientAsync(newPatient));
         }
 
         // PUT api/<patientController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClassPatient value)
+        public async Task Put(int id, [FromBody] ClassPatient value)
         {
-            var index = _PatientServise.GetClassdPatient().ToList().FindIndex(x => x.id == id);
-            _PatientServise.GetClassdPatient().ToList()[index] = value;
+            var patient =await  _PatientServise.GetClassdPatientAsync();
+            var index = patient.FindIndex(x => x.id == id);
+            var pat=await _PatientServise.GetClassdPatientAsync();
+            pat[index] = value;
         }
 
         // DELETE api/<patientController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var index= _PatientServise.GetClassdPatient().ToList().FindIndex(x => x.id==id);
-            _PatientServise.GetClassdPatient().ToList().RemoveAt(index);
+            var patient=await  _PatientServise.GetClassdPatientAsync();
+            var index = patient.FindIndex(x => x.id == id);
+           var pat= await _PatientServise.GetClassdPatientAsync();
+            pat.RemoveAt(index);
         }
     }
 }

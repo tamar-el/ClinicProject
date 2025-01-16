@@ -10,9 +10,9 @@ namespace clinicProject.core.Repositories
 {
     public interface Idoctor
     {
-        public IEnumerable<ClassDoctor> Get();
-        public ClassDoctor Add(ClassDoctor doctor);
+        public Task<List<ClassDoctor>> GetAsync();
+        public Task<ClassDoctor> AddAsync(ClassDoctor doctor);
         public void Delete(ClassDoctor doctor);
-        public void DeleteId(int id);
+        public Task DeleteIdAsync(int id);
     }
 }

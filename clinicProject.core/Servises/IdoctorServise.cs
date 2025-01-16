@@ -9,8 +9,8 @@ namespace clinicProject.core.Servises
 {
     public interface IdoctorServise
     {
-        public IEnumerable<ClassDoctor> GetClassDoctors();
-        public ClassDoctor AddDoctor(ClassDoctor doctor);
+        public Task<List<ClassDoctor>> GetClassDoctorsAsync();
+        public Task<ClassDoctor> AddDoctorAsync(ClassDoctor doctor);
         public ClassDoctor Get(int id);
     }
 }

@@ -16,14 +16,14 @@ namespace clinicProject.service
         {
             _routesRepository = routesRepository;
         }
-        public IEnumerable<ClassRoute> GetClassRoutes()
+        public async Task<List<ClassRoute>> GetClassRoutesAsync()
         {
-            return _routesRepository.Get();
+            return await _routesRepository.GetAsync();
 
         }
-        public ClassRoute AddRoutes(ClassRoute doctor)
+        public async Task<ClassRoute> AddRoutesAsync(ClassRoute doctor)
         {
-            return _routesRepository.Add(doctor);
+            return await _routesRepository.AddAsync(doctor);
         }
     }
 }

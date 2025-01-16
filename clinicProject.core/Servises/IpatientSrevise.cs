@@ -9,7 +9,7 @@ namespace clinicProject.core.Servises
 {
     public interface IpatientSrevise
     {
-        public IEnumerable<ClassPatient> GetClassdPatient();
-        public ClassPatient AddPatient(ClassPatient doctor);
+        public Task<List<ClassPatient>> GetClassdPatientAsync();
+        public Task<ClassPatient> AddPatientAsync(ClassPatient doctor);
     }
 }

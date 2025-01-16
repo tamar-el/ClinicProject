@@ -16,14 +16,14 @@ namespace clinicProject.service
         {
             _doctorRepository = doctorRepository;
         }
-        public IEnumerable<ClassDoctor> GetClassDoctors()
+        public async Task<List<ClassDoctor>> GetClassDoctorsAsync()
         {
-            return _doctorRepository.Get();
+            return await _doctorRepository.GetAsync();
 
         }
-        public ClassDoctor AddDoctor(ClassDoctor doctor)
+        public async Task<ClassDoctor> AddDoctorAsync(ClassDoctor doctor)
         {
-            return _doctorRepository.Add(doctor);
+            return await _doctorRepository.AddAsync(doctor);
         }
 
         public ClassDoctor Get(int id)

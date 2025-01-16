@@ -28,9 +28,9 @@ namespace clinicProject.Controllers
         //{
         //    return _RoutesServise.GetClassRoutes();
         //}
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var list = _RoutesServise.GetClassRoutes();
+            var list =await  _RoutesServise.GetClassRoutesAsync();
             var Rtolist = new List<RouteDto>();
             Rtolist = _Mapper.Map<List<RouteDto>>(list);
 
@@ -46,27 +46,31 @@ namespace clinicProject.Controllers
 
         // POST api/<RoutesController>
         [HttpPost]
-        public ActionResult Post([FromBody] RouteModel value)
+        public async Task<ActionResult> Post([FromBody] RouteModel value)
         {
             var newRoute = new ClassRoute { Date=value.Date,startTime=value.startTime,endTime=value.endTime,id=value.id,Dname=value.Dname };
 
-            return Ok(_RoutesServise.AddRoutes(newRoute));
+            return Ok(await _RoutesServise.AddRoutesAsync(newRoute));
         }
 
         // PUT api/<RoutesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClassRoute value)
+        public async Task Put(int id, [FromBody] ClassRoute value)
         {
-            var index = _RoutesServise.GetClassRoutes().ToList().FindIndex(x => x.id == id);
-            _RoutesServise.GetClassRoutes().ToList()[index] = value;
+            var route =await  _RoutesServise.GetClassRoutesAsync();
+            var index = route.FindIndex(x => x.id == id);
+            var rou=await _RoutesServise.GetClassRoutesAsync();
+            rou[index] = value;
         }
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var index= _RoutesServise.GetClassRoutes().ToList().FindIndex(x => x.id == id);
-            _RoutesServise.GetClassRoutes().ToList().RemoveAt(index);
+            var route=await  _RoutesServise.GetClassRoutesAsync();
+            var index = route.FindIndex(x => x.id == id);
+            var rou=await _RoutesServise.GetClassRoutesAsync();
+            rou.RemoveAt(index);
         }
     }
 }

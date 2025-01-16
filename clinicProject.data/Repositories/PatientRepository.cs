@@ -16,19 +16,19 @@ namespace clinicProject.data.Repositories
         {
             _context = context;
         }
-        public IEnumerable<ClassPatient> Get()
+        public async Task<List<ClassPatient>> GetAsync()
         {
-            return _context.patients.Include(o=>o.doctors);
+            return await _context.patients.Include(o=>o.doctors).ToListAsync();
         }
-        public ClassPatient Add(ClassPatient patient)
+        public async Task<ClassPatient> AddAsync(ClassPatient patient)
         {
             _context.patients.Add(patient);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
             return patient;
         }
         public void Delete(ClassPatient patient)
         {
-            _context?.patients.Remove(patient);
+            _context.patients.Remove(patient);
 
         }
         public void DeleteId(int id)

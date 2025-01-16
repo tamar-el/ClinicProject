@@ -1,4 +1,4 @@
-﻿                                                                                  using clinicProject.core.Servises;
+﻿using clinicProject.core.Servises;
 using clinicProject.core.Entities;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
@@ -18,19 +18,19 @@ namespace clinicProject.Controllers
         public doctorController(IdoctorServise doctorServise, IMapper mapper)
         {
             _DoctorServise = doctorServise;
-            _Mapper=mapper;
+            _Mapper = mapper;
         }
 
-       
+
         // GET: api/<doctorController>
         [HttpGet]
         //public IEnumerable<ClassDoctor> Get()
         //{
         //    return _DoctorServise.GetClassDoctors();
         //}
-        public ActionResult Get()
+        public async Task<ActionResult> Get()
         {
-            var list = _DoctorServise.GetClassDoctors();
+            var list = await _DoctorServise.GetClassDoctorsAsync();
             var Dtolist = new List<DoctorDto>();
             Dtolist = _Mapper.Map<List<DoctorDto>>(list);
 
@@ -46,27 +46,32 @@ namespace clinicProject.Controllers
 
         // POST api/<doctorController>
         [HttpPost]
-        public ActionResult Post([FromBody] DoctorModel value)
+        public async Task<ActionResult> Post([FromBody] DoctorModel value)
         {
-            var newDoctor=new ClassDoctor {id= value.id,name=value.name,phone=value.phone,email=value.email};
-            
-            return Ok(_DoctorServise.AddDoctor(newDoctor) );
+            var newDoctor = new ClassDoctor { id = value.id, name = value.name, phone = value.phone, email = value.email };
+
+            return Ok(await _DoctorServise.AddDoctorAsync(newDoctor));
         }
 
         // PUT api/<doctorController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClassDoctor value)
+        public async Task Put(int id, [FromBody] ClassDoctor value)
         {
-            var index= _DoctorServise.GetClassDoctors().ToList().FindIndex(x => x.id==id);
-            _DoctorServise.GetClassDoctors().ToList()[index]=value;
+            var doctors = await _DoctorServise.GetClassDoctorsAsync();
+            var index = doctors.FindIndex(x => x.id == id);
+            var getD=await _DoctorServise.GetClassDoctorsAsync();
+            getD[index] = value;
+
         }
 
         // DELETE api/<doctorController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var index= _DoctorServise.GetClassDoctors().ToList().FindIndex(x=>x.id==id);
-            _DoctorServise.GetClassDoctors().ToList().RemoveAt(index);
+            var doctors = await _DoctorServise.GetClassDoctorsAsync();
+            var index=doctors.FindIndex(x => x.id == id);
+            var getD=await _DoctorServise.GetClassDoctorsAsync();
+            getD.RemoveAt(index);
         }
     }
 }

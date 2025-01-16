@@ -9,8 +9,8 @@ namespace clinicProject.core.Repositories
 {
     public interface Ipatient
     {
-        public IEnumerable<ClassPatient> Get();
-        public ClassPatient Add(ClassPatient patient);
+        public Task<List<ClassPatient>> GetAsync();
+        public Task<ClassPatient> AddAsync(ClassPatient patient);
         public void Delete(ClassPatient patient);
         public void DeleteId(int id);
     }

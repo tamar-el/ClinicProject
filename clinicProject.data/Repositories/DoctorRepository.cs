@@ -16,28 +16,28 @@ namespace clinicProject.data.Repositories
         {
             _context = context;
         }
-        public IEnumerable<ClassDoctor> Get()
+        public async Task<List<ClassDoctor>> GetAsync()
         {
-            return _context.doctors.Include(o=>o.Routes);
+            return await _context.doctors.Include(o=>o.Routes).ToListAsync();
         }
-        public ClassDoctor Add(ClassDoctor doctor)
+        public async Task<ClassDoctor> AddAsync(ClassDoctor doctor)
         {
             _context.doctors.Add(doctor);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return doctor;
         }
         public void Delete(ClassDoctor doctor)
         {
-            _context?.doctors.Remove(doctor);
+            _context.doctors.Remove(doctor);
 
         }
-        public void DeleteId(int id)
+        public async Task DeleteIdAsync(int id)
         {
-            var doctors = _context.doctors.FirstOrDefault(x => x.id == id);
+            var doctors =await _context.doctors.FirstOrDefaultAsync(x => x.id == id);
             if (doctors != null)
             {
                 _context.doctors.Remove(doctors);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
             }
         }

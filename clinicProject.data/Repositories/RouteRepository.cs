@@ -2,6 +2,7 @@
 
 using clinicProject.core.Entities;
 using clinicProject.core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace clinicProject.data.Repositories
 {
+   
     public class RouteRepository:Iroutes
     {
         private DataContext _context;
@@ -17,14 +19,14 @@ namespace clinicProject.data.Repositories
         {
             _context = context;
         }
-        public IEnumerable<ClassRoute> Get()
+        public async Task<List<ClassRoute>> GetAsync()
         {
-            return _context.routes;
+            return await _context.routes.ToListAsync();
         }
-        public ClassRoute Add(ClassRoute routes)
+        public async Task<ClassRoute> AddAsync(ClassRoute routes)
         {
             _context.routes.Add(routes);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return routes;
         }
     }

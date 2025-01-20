@@ -10,6 +10,9 @@ namespace clinicProject.core.Servises
     public interface IpatientSrevise
     {
         public Task<List<ClassPatient>> GetClassdPatientAsync();
-        public Task<ClassPatient> AddPatientAsync(ClassPatient doctor);
+        public Task<ClassPatient> AddPatientAsync(ClassPatient patient);
+        public Task<ClassPatient> GetAsync(int id);
+        public Task PutAsync(int id, ClassPatient value);
+        public Task SaveChangesAsync();
     }
 }

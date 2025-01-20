@@ -29,5 +29,9 @@ namespace clinicProject.data.Repositories
             await _context.SaveChangesAsync();
             return routes;
         }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

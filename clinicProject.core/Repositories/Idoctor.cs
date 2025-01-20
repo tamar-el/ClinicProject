@@ -14,5 +14,7 @@ namespace clinicProject.core.Repositories
         public Task<ClassDoctor> AddAsync(ClassDoctor doctor);
         public void Delete(ClassDoctor doctor);
         public Task DeleteIdAsync(int id);
+        public Task SaveChangesAsync();
+        
     }
 }

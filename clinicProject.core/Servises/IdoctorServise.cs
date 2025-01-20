@@ -11,6 +11,10 @@ namespace clinicProject.core.Servises
     {
         public Task<List<ClassDoctor>> GetClassDoctorsAsync();
         public Task<ClassDoctor> AddDoctorAsync(ClassDoctor doctor);
-        public ClassDoctor Get(int id);
+        public Task<ClassDoctor> GetAsync(int id);
+        public Task SaveChangesAsync();
+        public Task DeleteIdAsync(int id);
+
+        public Task PutAsync(int id, ClassDoctor value);
     }
 }

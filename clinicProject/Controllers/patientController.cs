@@ -25,10 +25,7 @@ namespace clinicProject.Controllers
 
         // GET: api/<patientController>
         [HttpGet]
-        //public IEnumerable<ClassPatient> Get()
-        //{
-        //    return _PatientServise.GetClassdPatient();
-        //}
+       
         public async Task<ActionResult> Get()
         {
             var list =await  _PatientServise.GetClassdPatientAsync();
@@ -39,31 +36,31 @@ namespace clinicProject.Controllers
         }
 
         // GET api/<patientController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var list = await _PatientServise.GetAsync(id);
+            var Dtolist = new PatientDto();
+            Dtolist = _Mapper.Map<PatientDto>(list);
+            return Ok(Dtolist);
+        }
         // POST api/<patientController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PatientModel value)
         {
-            var newPatient = new ClassPatient { id = value.id, name = value.name,age=value.age,address=value.address, phone = value.phone, email = value.email };
+            var newPatient = new ClassPatient {  name = value.name,age=value.age,address=value.address, phone = value.phone, email = value.email };
 
             return Ok(await _PatientServise.AddPatientAsync(newPatient));
         }
 
         // PUT api/<patientController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] ClassPatient value)
+        public async Task Put(int id, [FromBody] PatientModel value)
         {
-            var patient =await  _PatientServise.GetClassdPatientAsync();
-            var index = patient.FindIndex(x => x.id == id);
-            var pat=await _PatientServise.GetClassdPatientAsync();
-            pat[index] = value;
-        }
+            var newPatient = new ClassPatient {  name = value.name, age = value.age, address = value.address, phone = value.phone, email = value.email };
+            await _PatientServise.PutAsync(id, newPatient);
 
+        }
         // DELETE api/<patientController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)

@@ -24,10 +24,7 @@ namespace clinicProject.Controllers
 
         // GET: api/<doctorController>
         [HttpGet]
-        //public IEnumerable<ClassDoctor> Get()
-        //{
-        //    return _DoctorServise.GetClassDoctors();
-        //}
+       
         public async Task<ActionResult> Get()
         {
             var list = await _DoctorServise.GetClassDoctorsAsync();
@@ -38,11 +35,14 @@ namespace clinicProject.Controllers
         }
 
         // GET api/<doctorController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var list = await _DoctorServise.GetAsync(id);
+            var Dtolist = new DoctorDto();
+            Dtolist = _Mapper.Map<DoctorDto>(list);
+            return Ok(Dtolist);
+        }
 
         // POST api/<doctorController>
         [HttpPost]
@@ -54,24 +54,37 @@ namespace clinicProject.Controllers
         }
 
         // PUT api/<doctorController>/5
-        [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] ClassDoctor value)
-        {
-            var doctors = await _DoctorServise.GetClassDoctorsAsync();
-            var index = doctors.FindIndex(x => x.id == id);
-            var getD=await _DoctorServise.GetClassDoctorsAsync();
-            getD[index] = value;
+        //[HttpPut("{id}")]
+        //public async Task<ClassDoctor> Put(int id, [FromBody] ClassDoctor value)
+        //{
+        //    var doctors = await _DoctorServise.GetClassDoctorsAsync();
+        //    var index = doctors.FindIndex(x => x.id == id);
+        //    var getD=await _DoctorServise.GetClassDoctorsAsync();
+        //    getD[index] = value;
+        //    return value;
 
+        //}
+
+
+        [HttpPut("{id}")]
+        public async Task Put(int id, [FromBody] DoctorModel value)
+        {
+            var newDoctor = new ClassDoctor { id = value.id, name = value.name, phone = value.phone, email = value.email };
+            await _DoctorServise.PutAsync(id, newDoctor);
+          
         }
+
 
         // DELETE api/<doctorController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
-            var doctors = await _DoctorServise.GetClassDoctorsAsync();
-            var index=doctors.FindIndex(x => x.id == id);
-            var getD=await _DoctorServise.GetClassDoctorsAsync();
-            getD.RemoveAt(index);
+            //var doctors = await _DoctorServise.GetClassDoctorsAsync();
+            //var index=doctors.FindIndex(x => x.id == id);
+            //var getD=await _DoctorServise.GetClassDoctorsAsync();
+            //getD.RemoveAt(index);
+            //await _DoctorServise.SaveChangesAsync();
+            await _DoctorServise.DeleteIdAsync(id);
         }
     }
 }

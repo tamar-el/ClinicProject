@@ -26,21 +26,28 @@ namespace clinicProject.data.Repositories
             await _context.SaveChangesAsync();
             return doctor;
         }
+        public async  Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
         public void Delete(ClassDoctor doctor)
         {
             _context.doctors.Remove(doctor);
 
         }
+       
         public async Task DeleteIdAsync(int id)
         {
+
             var doctors =await _context.doctors.FirstOrDefaultAsync(x => x.id == id);
             if (doctors != null)
             {
                 _context.doctors.Remove(doctors);
                 await _context.SaveChangesAsync();
-
             }
+            else return;
         }
         
+
     }
 }

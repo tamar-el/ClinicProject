@@ -21,9 +21,42 @@ namespace clinicProject.service
             return await _routesRepository.GetAsync();
 
         }
-        public async Task<ClassRoute> AddRoutesAsync(ClassRoute doctor)
+        public async Task<ClassRoute> GetAsync(int id)
         {
-            return await _routesRepository.AddAsync(doctor);
+            var route = await _routesRepository.GetAsync();
+            var index = route.FindIndex(x => x.id == id);
+            return route[index];
+
+        }
+        public async Task<ClassRoute> AddRoutesAsync(ClassRoute route)
+        {
+            return await _routesRepository.AddAsync(route);
+        }
+        public async Task SaveChangesAsync()
+        {
+            await _routesRepository.SaveChangesAsync();
+        }
+        public async Task PutAsync(int id, ClassRoute value)
+        {
+            if (id <= 0)
+            {
+
+            }
+            // חיפוש הרופא במערכת
+            var routes = await _routesRepository.GetAsync();
+            var index = routes.FindIndex(x => x.id == id);
+            //if (index == -1)
+            //{
+            //    return NotFound($"Doctor with ID {id} not found.");
+            //}
+            // עדכון הרופא במערך
+            routes[index].Date = value.Date;
+            routes[index].startTime = value.startTime;
+            routes[index].endTime = value.endTime;
+            //routes[index].id = routes[index].id;
+            routes[index].Dname = value.Dname;
+            await _routesRepository.SaveChangesAsync();
+
         }
     }
 }

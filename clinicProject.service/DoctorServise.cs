@@ -25,14 +25,42 @@ namespace clinicProject.service
         {
             return await _doctorRepository.AddAsync(doctor);
         }
-
-        public ClassDoctor Get(int id)
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await _doctorRepository.SaveChangesAsync();
+        }
+
+        public async Task<ClassDoctor> GetAsync(int id)
+        {
+           var doctor= await _doctorRepository.GetAsync();
+            var index = doctor.FindIndex(x => x.id == id);
+            return doctor[index];
+
         }
         //public ClassDoctor Get(int id)
         //{
         //    return _doctorRepository.Get(id);
         //}
+        public async Task DeleteIdAsync(int id)
+        {
+            _doctorRepository.DeleteIdAsync(id);
+        }
+        public async Task PutAsync(int id, ClassDoctor value)
+        {
+           
+            // חיפוש הרופא במערכת
+            var doctors = await _doctorRepository.GetAsync();
+            var index = doctors.FindIndex(x => x.id == id);
+            //if (index == -1)
+            //{
+            //    return NotFound($"Doctor with ID {id} not found.");
+            //}
+            // עדכון הרופא במערך
+            doctors[index].name = value.name;
+            doctors[index].phone = value.phone;
+            doctors[index].email = value.email;
+            await _doctorRepository.SaveChangesAsync();
+            
+        }
     }
 }

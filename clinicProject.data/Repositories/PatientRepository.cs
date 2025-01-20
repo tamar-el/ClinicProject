@@ -41,5 +41,9 @@ namespace clinicProject.data.Repositories
 
             }
         }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

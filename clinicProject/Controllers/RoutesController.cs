@@ -24,10 +24,7 @@ namespace clinicProject.Controllers
         }
         // GET: api/<RoutesController>
         [HttpGet]
-        //public  IEnumerable<ClassRoute> Get()
-        //{
-        //    return _RoutesServise.GetClassRoutes();
-        //}
+       
         public async Task<ActionResult> Get()
         {
             var list =await  _RoutesServise.GetClassRoutesAsync();
@@ -38,39 +35,44 @@ namespace clinicProject.Controllers
         }
 
         // GET api/<RoutesController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(int id)
+        {
+            var list = await _RoutesServise.GetAsync(id);
+            var Dtolist = new RouteDto();
+            Dtolist = _Mapper.Map<RouteDto>(list);
+            return Ok(Dtolist);
+        }
 
         // POST api/<RoutesController>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] RouteModel value)
         {
-            var newRoute = new ClassRoute { Date=value.Date,startTime=value.startTime,endTime=value.endTime,id=value.id,Dname=value.Dname };
+            var newRoute = new ClassRoute { Date=value.Date,startTime=value.startTime,endTime=value.endTime,Dname=value.Dname };
 
             return Ok(await _RoutesServise.AddRoutesAsync(newRoute));
         }
 
         // PUT api/<RoutesController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] ClassRoute value)
+        public async Task Put(int id, [FromBody] RouteModel value)
         {
-            var route =await  _RoutesServise.GetClassRoutesAsync();
-            var index = route.FindIndex(x => x.id == id);
-            var rou=await _RoutesServise.GetClassRoutesAsync();
-            rou[index] = value;
+            var newRoute = new ClassRoute { Date = value.Date, startTime = value.startTime, endTime = value.endTime ,Dname = value.Dname };
+            await _RoutesServise.PutAsync(id, newRoute);
+
         }
+
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
+
             var route=await  _RoutesServise.GetClassRoutesAsync();
             var index = route.FindIndex(x => x.id == id);
             var rou=await _RoutesServise.GetClassRoutesAsync();
             rou.RemoveAt(index);
+            _RoutesServise.SaveChangesAsync();
         }
     }
 }

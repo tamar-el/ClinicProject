@@ -30,22 +30,24 @@ namespace clinicProject.data.Repositories
         {
             await _context.SaveChangesAsync();
         }
-        public void Delete(ClassDoctor doctor)
+        public async void DeleteByClass(ClassDoctor doctor)
         {
             _context.doctors.Remove(doctor);
+            await _context.SaveChangesAsync();
 
         }
        
-        public async Task DeleteIdAsync(int id)
+        public async Task<bool> DeleteIdAsync(int id)
         {
-
+           // var index= _context.doctors.FirstAsync(x => x.id == id);
             var doctors =await _context.doctors.FirstOrDefaultAsync(x => x.id == id);
             if (doctors != null)
             {
                 _context.doctors.Remove(doctors);
                 await _context.SaveChangesAsync();
+                return true;
             }
-            else return;
+            return false;
         }
         
 

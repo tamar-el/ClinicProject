@@ -12,8 +12,8 @@ namespace clinicProject.core.Repositories
     {
         public Task<List<ClassDoctor>> GetAsync();
         public Task<ClassDoctor> AddAsync(ClassDoctor doctor);
-        public void Delete(ClassDoctor doctor);
-        public Task DeleteIdAsync(int id);
+        public void DeleteByClass(ClassDoctor doctor);
+        public Task<bool> DeleteIdAsync(int id);
         public Task SaveChangesAsync();
         
     }

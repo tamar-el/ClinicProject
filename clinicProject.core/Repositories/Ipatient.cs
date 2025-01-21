@@ -12,7 +12,7 @@ namespace clinicProject.core.Repositories
         public Task<List<ClassPatient>> GetAsync();
         public Task<ClassPatient> AddAsync(ClassPatient patient);
         public void Delete(ClassPatient patient);
-        public void DeleteId(int id);
+        public Task<bool> DeleteIdAsync(int id);
         public Task SaveChangesAsync();
     }
 }

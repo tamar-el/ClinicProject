@@ -69,7 +69,7 @@ namespace clinicProject.Controllers
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] DoctorModel value)
         {
-            var newDoctor = new ClassDoctor { id = value.id, name = value.name, phone = value.phone, email = value.email };
+            var newDoctor = new ClassDoctor {  name = value.name, phone = value.phone, email = value.email };
             await _DoctorServise.PutAsync(id, newDoctor);
           
         }
@@ -77,14 +77,9 @@ namespace clinicProject.Controllers
 
         // DELETE api/<doctorController>/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            //var doctors = await _DoctorServise.GetClassDoctorsAsync();
-            //var index=doctors.FindIndex(x => x.id == id);
-            //var getD=await _DoctorServise.GetClassDoctorsAsync();
-            //getD.RemoveAt(index);
-            //await _DoctorServise.SaveChangesAsync();
-            await _DoctorServise.DeleteIdAsync(id);
+           return await _DoctorServise.DeleteIdAsync(id);
         }
     }
 }

@@ -31,16 +31,19 @@ namespace clinicProject.data.Repositories
             _context.patients.Remove(patient);
 
         }
-        public void DeleteId(int id)
+        public async Task<bool> DeleteIdAsync(int id)
         {
-            var patients = _context.patients.FirstOrDefault(x => x.id == id);
-            if (patients != null)
+            // var index= _context.doctors.FirstAsync(x => x.id == id);
+            var patient = await _context.patients.FirstOrDefaultAsync(x => x.id == id);
+            if (patient != null)
             {
-                _context.patients.Remove(patients);
-                _context.SaveChanges();
-
+                _context.patients.Remove(patient);
+                await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

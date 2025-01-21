@@ -12,5 +12,6 @@ namespace clinicProject.core.Repositories
         public Task<List<ClassRoute>> GetAsync();
         public Task<ClassRoute> AddAsync(ClassRoute routes);
         public Task SaveChangesAsync();
+        public Task<bool> DeleteIdAsync(int id);
     }
 }

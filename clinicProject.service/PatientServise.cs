@@ -56,6 +56,23 @@ namespace clinicProject.service
             await _patientRepository.SaveChangesAsync();
 
         }
+        public async Task<bool> DeleteIdAsync(int id)
+        {
+            var patients = await _patientRepository.GetAsync();
+            var findP = patients.FirstOrDefault(x => x.id == id);
+            if (findP == null)
+            {
+                return false;
+            }
+            else
+            {
+
+                //  _doctorRepository.DeleteByClass(findD);
+                await _patientRepository.DeleteIdAsync(id);
+                return true;
+            }
+
+        }
 
     }
 }

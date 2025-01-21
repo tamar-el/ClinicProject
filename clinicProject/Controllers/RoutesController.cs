@@ -65,14 +65,9 @@ namespace clinicProject.Controllers
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-
-            var route=await  _RoutesServise.GetClassRoutesAsync();
-            var index = route.FindIndex(x => x.id == id);
-            var rou=await _RoutesServise.GetClassRoutesAsync();
-            rou.RemoveAt(index);
-            _RoutesServise.SaveChangesAsync();
+            return await _RoutesServise.DeleteIdAsync(id);
         }
     }
 }

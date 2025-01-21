@@ -63,12 +63,9 @@ namespace clinicProject.Controllers
         }
         // DELETE api/<patientController>/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var patient=await  _PatientServise.GetClassdPatientAsync();
-            var index = patient.FindIndex(x => x.id == id);
-           var pat= await _PatientServise.GetClassdPatientAsync();
-            pat.RemoveAt(index);
+            return await _PatientServise.DeleteIdAsync(id);
         }
     }
 }

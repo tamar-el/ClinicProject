@@ -33,5 +33,17 @@ namespace clinicProject.data.Repositories
         {
             await _context.SaveChangesAsync();
         }
+        public async Task<bool> DeleteIdAsync(int id)
+        {
+           
+            var route = await _context.routes.FirstOrDefaultAsync(x => x.id == id);
+            if (route != null)
+            {
+                _context.routes.Remove(route);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
     }
 }

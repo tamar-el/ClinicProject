@@ -48,38 +48,36 @@ namespace clinicProject.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] DoctorModel value)
         {
-            var newDoctor = new ClassDoctor { id = value.id, name = value.name, phone = value.phone, email = value.email };
+            
 
-            return Ok(await _DoctorServise.AddDoctorAsync(newDoctor));
+            return Ok(await _DoctorServise.AddDoctorAsync(_Mapper.Map<ClassDoctor>(value)));
         }
 
-        // PUT api/<doctorController>/5
-        //[HttpPut("{id}")]
-        //public async Task<ClassDoctor> Put(int id, [FromBody] ClassDoctor value)
-        //{
-        //    var doctors = await _DoctorServise.GetClassDoctorsAsync();
-        //    var index = doctors.FindIndex(x => x.id == id);
-        //    var getD=await _DoctorServise.GetClassDoctorsAsync();
-        //    getD[index] = value;
-        //    return value;
-
-        //}
+      
 
 
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] DoctorModel value)
         {
-            var newDoctor = new ClassDoctor {  name = value.name, phone = value.phone, email = value.email };
-            await _DoctorServise.PutAsync(id, newDoctor);
-          
+
+            await _DoctorServise.PutAsync(id, _Mapper.Map<ClassDoctor>(value));
         }
 
 
         // DELETE api/<doctorController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-           return await _DoctorServise.DeleteIdAsync(id);
+           
+            bool isDeleted = await _DoctorServise.DeleteIdAsync(id);
+            if (isDeleted)
+            {
+                return Ok($"Patient with ID {id} deleted successfully.");
+            }
+            else
+            {
+                return NotFound($"Patient with ID {id} does not exist.");
+            }
         }
     }
 }

@@ -48,24 +48,33 @@ namespace clinicProject.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PatientModel value)
         {
-            var newPatient = new ClassPatient {  name = value.name,age=value.age,address=value.address, phone = value.phone, email = value.email };
+            
 
-            return Ok(await _PatientServise.AddPatientAsync(newPatient));
+            return Ok(await _PatientServise.AddPatientAsync(_Mapper.Map<ClassPatient>(value)));
         }
 
         // PUT api/<patientController>/5
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] PatientModel value)
         {
-            var newPatient = new ClassPatient {  name = value.name, age = value.age, address = value.address, phone = value.phone, email = value.email };
-            await _PatientServise.PutAsync(id, newPatient);
+           
+            await _PatientServise.PutAsync(id, _Mapper.Map<ClassPatient>(value));
 
         }
         // DELETE api/<patientController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return await _PatientServise.DeleteIdAsync(id);
+             
+            bool isDeleted = await _PatientServise.DeleteIdAsync(id);
+            if (isDeleted)
+            {
+                return Ok($"Patient with ID {id} deleted successfully.");
+            }
+            else
+            {
+                return NotFound($"Patient with ID {id} does not exist.");
+            }
         }
     }
 }

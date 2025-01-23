@@ -48,26 +48,35 @@ namespace clinicProject.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] RouteModel value)
         {
-            var newRoute = new ClassRoute { Date=value.Date,startTime=value.startTime,endTime=value.endTime,Dname=value.Dname };
+           
 
-            return Ok(await _RoutesServise.AddRoutesAsync(newRoute));
+            return Ok(await _RoutesServise.AddRoutesAsync(_Mapper.Map<ClassRoute>(value)));
         }
 
         // PUT api/<RoutesController>/5
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] RouteModel value)
         {
-            var newRoute = new ClassRoute { Date = value.Date, startTime = value.startTime, endTime = value.endTime ,Dname = value.Dname };
-            await _RoutesServise.PutAsync(id, newRoute);
+           
+            await _RoutesServise.PutAsync(id, _Mapper.Map<ClassRoute>(value));
 
         }
 
 
         // DELETE api/<RoutesController>/5
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return await _RoutesServise.DeleteIdAsync(id);
+             
+            bool isDeleted = await _RoutesServise.DeleteIdAsync(id);
+            if (isDeleted)
+            {
+                return Ok($"Patient with ID {id} deleted successfully.");
+            }
+            else
+            {
+                return NotFound($"Patient with ID {id} does not exist.");
+            }
         }
     }
 }

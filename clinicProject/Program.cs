@@ -35,7 +35,7 @@ builder.Services.AddScoped<Ipatient, PatientRepository>();
 builder.Services.AddScoped<IroutesSrevise,RoutesServise>();
 builder.Services.AddScoped<Iroutes, RouteRepository>();
 //הזרקת דף מיפוי נתונים
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile) ,typeof(MappingPostModel));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

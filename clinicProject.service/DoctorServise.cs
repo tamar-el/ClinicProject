@@ -37,10 +37,7 @@ namespace clinicProject.service
             return doctor[index];
 
         }
-        //public ClassDoctor Get(int id)
-        //{
-        //    return _doctorRepository.Get(id);
-        //}
+       
         public async Task<bool> DeleteIdAsync(int id)
         {
             var doctors = await _doctorRepository.GetAsync();

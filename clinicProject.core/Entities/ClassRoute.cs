@@ -13,6 +13,8 @@ namespace clinicProject.core.Entities
         public string endTime { get; set; }
         public int id { get; set; }
         public string Dname { get; set; }
+        public int doctorId { get; set; }
+        public int patientId { get; set; }
         public ClassDoctor doctor { get; set; }
         public ClassPatient patient { get; set; }
     }

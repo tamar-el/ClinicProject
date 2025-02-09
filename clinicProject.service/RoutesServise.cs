@@ -28,10 +28,20 @@ namespace clinicProject.service
             return route[index];
 
         }
+
         public async Task<ClassRoute> AddRoutesAsync(ClassRoute route)
         {
+            var IsDoctor = _routesRepository.ReturnIDoctorByDname(route.Dname);
+
+            if (IsDoctor.Result == -1)
+            {
+                Console.WriteLine("Dname Isnot exist!");
+                return null;
+            }
+            route.doctorId = IsDoctor.Result;
             return await _routesRepository.AddAsync(route);
         }
+
         public async Task SaveChangesAsync()
         {
             await _routesRepository.SaveChangesAsync();
@@ -42,14 +52,14 @@ namespace clinicProject.service
             {
 
             }
-            // חיפוש הרופא במערכת
+        
             var routes = await _routesRepository.GetAsync();
             var index = routes.FindIndex(x => x.id == id);
             //if (index == -1)
             //{
             //    return NotFound($"Doctor with ID {id} not found.");
             //}
-            // עדכון הרופא במערך
+         
             routes[index].Date = value.Date;
             routes[index].startTime = value.startTime;
             routes[index].endTime = value.endTime;

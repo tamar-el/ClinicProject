@@ -9,6 +9,7 @@ namespace clinicProject.Models
         public string endTime { get; set; }
         public int id { get; set; }
         public string Dname { get; set; }
-       
+        public int patientId { get; set; }
+
     }
 }

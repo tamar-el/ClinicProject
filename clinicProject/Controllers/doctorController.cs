@@ -72,11 +72,11 @@ namespace clinicProject.Controllers
             bool isDeleted = await _DoctorServise.DeleteIdAsync(id);
             if (isDeleted)
             {
-                return Ok($"Patient with ID {id} deleted successfully.");
+                return Ok($"doctor with ID {id} deleted successfully.");
             }
             else
             {
-                return NotFound($"Patient with ID {id} does not exist.");
+                return NotFound($"doctor with ID {id} does not exist.");
             }
         }
     }

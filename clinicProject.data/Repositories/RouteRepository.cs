@@ -29,6 +29,18 @@ namespace clinicProject.data.Repositories
             await _context.SaveChangesAsync();
             return routes;
         }
+        public async Task<int> ReturnIDoctorByDname(string Dname)
+        {
+            List<ClassDoctor> doctor =await _context.doctors.ToListAsync();
+           var find=  doctor.FirstOrDefault(x => x.name.Equals(Dname));
+            if (find != null)
+            {
+                return find.id;
+            }
+            else return -1;
+
+        }
+        
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

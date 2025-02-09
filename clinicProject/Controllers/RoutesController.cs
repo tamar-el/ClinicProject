@@ -6,6 +6,7 @@ using clinicProject.core.DBOs;
 using clinicProject.service;
 using clinicProject.core.DTOs;
 using clinicProject.Models;
+using clinicProject.data.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,10 +49,10 @@ namespace clinicProject.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] RouteModel value)
         {
-           
-
             return Ok(await _RoutesServise.AddRoutesAsync(_Mapper.Map<ClassRoute>(value)));
         }
+
+
 
         // PUT api/<RoutesController>/5
         [HttpPut("{id}")]
@@ -71,11 +72,11 @@ namespace clinicProject.Controllers
             bool isDeleted = await _RoutesServise.DeleteIdAsync(id);
             if (isDeleted)
             {
-                return Ok($"Patient with ID {id} deleted successfully.");
+                return Ok($"Route with ID {id} deleted successfully.");
             }
             else
             {
-                return NotFound($"Patient with ID {id} does not exist.");
+                return NotFound($"Route with ID {id} does not exist.");
             }
         }
     }
